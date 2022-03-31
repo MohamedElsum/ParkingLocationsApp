@@ -12,6 +12,9 @@ void main() {
 class ParkingLocationsApp extends StatelessWidget {
   final AppRouter appRouter;
 
+  // google map api key
+  // AIzaSyAPLb46r66qqhEkyoQZkzvLGVO2y4QtG1s
+
   const ParkingLocationsApp({
     Key? key,
     required this.appRouter,

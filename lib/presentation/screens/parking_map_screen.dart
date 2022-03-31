@@ -1,7 +1,7 @@
 import 'package:breaking_bad_clone/business_logic/cubit/parking_cubit.dart';
-import 'package:breaking_bad_clone/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ParkingMapScreen extends StatefulWidget {
   const ParkingMapScreen({Key? key}) : super(key: key);
@@ -25,9 +25,35 @@ class _ParkingMapScreenState extends State<ParkingMapScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: AppColors.appYellow,
+            backgroundColor: Colors.indigo,
+            title: Text('Parking Locations'),
           ),
-          body: Container(),
+          body: Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 700,
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(30.033333, 31.233334),
+                    zoom: 15,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: ElevatedButton(
+                    onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.indigo,
+                    elevation: 5,
+                  ),
+                    child: Text('Add Parking Location'),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

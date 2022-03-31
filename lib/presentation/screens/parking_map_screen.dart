@@ -1,4 +1,5 @@
 import 'package:breaking_bad_clone/business_logic/cubit/parking_cubit.dart';
+import 'package:breaking_bad_clone/presentation/screens/add_location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,16 +41,22 @@ class _ParkingMapScreenState extends State<ParkingMapScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: ElevatedButton(
-                    onPressed: (){},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AddLocation()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.indigo,
                     elevation: 5,
                   ),
-                    child: Text('Add Parking Location'),
+                  child: const Text('Add Parking Location'),
                 ),
               ),
             ],

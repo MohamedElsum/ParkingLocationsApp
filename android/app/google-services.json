@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "59049379509",
+    "project_id": "parkinglocations-dcf17",
+    "storage_bucket": "parkinglocations-dcf17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59049379509:android:fda3e676022ea2783a20fc",
+        "android_client_info": {
+          "package_name": "com.zidane.breaking_bad_clone.breaking_bad_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59049379509-reo5qnouv3a30au6sp3bbe6e8apjr1uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQO0EZu6TnZJN5VxzXWM13dOd34wZ7PEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59049379509-reo5qnouv3a30au6sp3bbe6e8apjr1uk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

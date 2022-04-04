@@ -15,10 +15,10 @@ class ParkingLoading extends ParkingState {
 }
 
 class ParkingLoaded extends ParkingState {
-  final List<dynamic> data;
+  final List<Locations> locations;
 
-  const ParkingLoaded(this.data);
+  const ParkingLoaded(this.locations);
 
   @override
-  List<Object> get props => [data];
+  List<Object> get props => [locations];
 }

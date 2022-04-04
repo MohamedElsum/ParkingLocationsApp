@@ -1,6 +1,8 @@
+import 'package:breaking_bad_clone/business_logic/cubit/parking_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddLocation extends StatefulWidget {
   const AddLocation({Key? key}) : super(key: key);
@@ -10,16 +12,48 @@ class AddLocation extends StatefulWidget {
 }
 
 class _AddLocationState extends State<AddLocation> {
+  TextEditingController latController = TextEditingController();
+  TextEditingController longController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController desController = TextEditingController();
+  double rate = 0;
+  late ParkingCubit _parkingCubit;
+
+  Set<Marker> mark = {};
+
+  @override
+  void dispose() {
+    latController.dispose();
+    longController.dispose();
+    nameController.dispose();
+    desController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           GoogleMap(
-            initialCameraPosition: CameraPosition(
+            markers: mark,
+            initialCameraPosition: const CameraPosition(
               target: LatLng(30.033333, 31.233334),
               zoom: 15,
             ),
+            onTap: (newLocation) {
+              setState(() {
+                mark.clear();
+                mark.add(
+                  Marker(
+                    markerId: MarkerId('new Location'),
+                    position: newLocation,
+                  ),
+                );
+                latController.text = newLocation.latitude.toString();
+                longController.text = newLocation.longitude.toString();
+              });
+            },
           ),
           Positioned(
             left: 0,
@@ -27,7 +61,7 @@ class _AddLocationState extends State<AddLocation> {
             bottom: 0,
             child: Container(
               width: double.infinity,
-              height: 420,
+              height: 450,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -55,15 +89,18 @@ class _AddLocationState extends State<AddLocation> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 10),
                     child: TextField(
+                      controller: latController,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(left: 25, top: 15),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         hintText: 'Latitude',
@@ -81,15 +118,18 @@ class _AddLocationState extends State<AddLocation> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 10),
                     child: TextField(
+                      controller: longController,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(left: 25, top: 15),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         hintText: 'Longitude',
@@ -107,15 +147,18 @@ class _AddLocationState extends State<AddLocation> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 10),
                     child: TextField(
+                      controller: nameController,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(left: 25, top: 15),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         hintText: 'Name',
@@ -133,15 +176,18 @@ class _AddLocationState extends State<AddLocation> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 10),
                     child: TextField(
+                      controller: desController,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(left: 25, top: 15),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         hintText: 'Description',
@@ -179,9 +225,12 @@ class _AddLocationState extends State<AddLocation> {
                             half: Image.asset('assets/images/star.png'),
                             empty: Image.asset('assets/images/star.png'),
                           ),
-                          itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 1.0),
                           onRatingUpdate: (rating) {
-                            print(rating);
+                            setState(() {
+                              rate = rating;
+                            });
                           },
                         ),
                       ],
@@ -194,7 +243,15 @@ class _AddLocationState extends State<AddLocation> {
                     width: 120,
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BlocProvider.of<ParkingCubit>(context).addLocation(
+                          double.parse(latController.text),
+                          double.parse(longController.text),
+                          nameController.text,
+                          desController.text,
+                          rate,
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.indigo,
                         elevation: 5,

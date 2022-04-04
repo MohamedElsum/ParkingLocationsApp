@@ -12,57 +12,72 @@ class ParkingMapScreen extends StatefulWidget {
 }
 
 class _ParkingMapScreenState extends State<ParkingMapScreen> {
+  Set<Marker> _markers = {};
   late ParkingCubit _parkingCubit;
 
   @override
   void initState() {
+    _parkingCubit =BlocProvider.of<ParkingCubit>(context);
+    _parkingCubit.getLocationsData();
     super.initState();
-    _parkingCubit = BlocProvider.of<ParkingCubit>(context);
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId('First Location'),
+          position: LatLng(30.033333, 31.233334),
+          infoWindow: InfoWindow(
+            title: 'Cairo',
+            snippet: 'Parking Location',
+          ),
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ParkingCubit, ParkingState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.indigo,
-            title: Text('Parking Locations'),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.indigo,
+        title: const Text('Parking Locations'),
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 700,
+            child: GoogleMap(
+              onMapCreated: _onMapCreated,
+              markers: _markers,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(30.033333, 31.233334),
+                zoom: 15,
+              ),
+            ),
           ),
-          body: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: 700,
-                child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(30.033333, 31.233334),
-                    zoom: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddLocation()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo,
-                    elevation: 5,
-                  ),
-                  child: const Text('Add Parking Location'),
-                ),
-              ),
-            ],
+          const SizedBox(
+            height: 10,
           ),
-        );
-      },
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddLocation()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.indigo,
+                elevation: 5,
+              ),
+              child: const Text('Add Parking Location'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

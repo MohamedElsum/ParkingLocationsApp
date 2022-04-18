@@ -1,10 +1,6 @@
-import 'dart:html';
-
 import 'package:breaking_bad_clone/data/data_source/remote_data_source/remote_data_source.dart';
 import 'package:breaking_bad_clone/data/web_services/web_services.dart';
 import 'package:breaking_bad_clone/domain/models/location.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class RemoteDataSourceImpl implements RemoteDataSource {
   final WebServices webServices;

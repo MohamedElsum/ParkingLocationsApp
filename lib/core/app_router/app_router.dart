@@ -14,7 +14,8 @@ class AppRouter {
 
   AppRouter() {
     _addLocationUsecase = AddLocationUsecase();
-    _parkingCubit = ParkingCubit(_addLocationUsecase,_getLocationUsecase);
+    _getLocationUsecase = GetLocationUsecase();
+    _parkingCubit = ParkingCubit(_addLocationUsecase, _getLocationUsecase);
   }
 
   Route? generateRoute(RouteSettings settings) {
@@ -22,15 +23,14 @@ class AppRouter {
       case AppConstants.showParkingMapScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (BuildContext context) => _parkingCubit,
-            child: ParkingMapScreen(),
+            create: (_) => _parkingCubit,
+            child: const ParkingMapScreen(),
           ),
         );
       case AppConstants.parkingMapScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider<ParkingCubit>(
-            create: (BuildContext context) => _parkingCubit,
-            child:  AddLocation(),
+          builder: (_) => AddLocation(
+            parkingCubit: _parkingCubit,
           ),
         );
     }

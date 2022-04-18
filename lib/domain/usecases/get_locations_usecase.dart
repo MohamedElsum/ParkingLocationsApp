@@ -1,5 +1,4 @@
 import 'package:breaking_bad_clone/domain/models/location.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data/data_source/remote_data_source/remote_data_source_impl.dart';
 import '../../data/web_services/web_services.dart';
 import '../respository_impl/repo_impl.dart';

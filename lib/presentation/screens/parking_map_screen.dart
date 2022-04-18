@@ -12,20 +12,13 @@ class ParkingMapScreen extends StatefulWidget {
 }
 
 class _ParkingMapScreenState extends State<ParkingMapScreen> {
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   late ParkingCubit _parkingCubit;
-
-  @override
-  void initState() {
-    _parkingCubit =BlocProvider.of<ParkingCubit>(context);
-    _parkingCubit.getLocationsData();
-    super.initState();
-  }
 
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
       _markers.add(
-        Marker(
+        const Marker(
           markerId: MarkerId('First Location'),
           position: LatLng(30.033333, 31.233334),
           infoWindow: InfoWindow(
@@ -52,7 +45,7 @@ class _ParkingMapScreenState extends State<ParkingMapScreen> {
             child: GoogleMap(
               onMapCreated: _onMapCreated,
               markers: _markers,
-              initialCameraPosition: CameraPosition(
+              initialCameraPosition: const CameraPosition(
                 target: LatLng(30.033333, 31.233334),
                 zoom: 15,
               ),
@@ -65,8 +58,13 @@ class _ParkingMapScreenState extends State<ParkingMapScreen> {
             borderRadius: BorderRadius.circular(30),
             child: ElevatedButton(
               onPressed: () {
+                _parkingCubit = BlocProvider.of<ParkingCubit>(context);
+                _parkingCubit.getLocationsData();
+
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AddLocation()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AddLocation(parkingCubit: _parkingCubit)),
                 );
               },
               style: ElevatedButton.styleFrom(

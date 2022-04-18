@@ -1,5 +1,4 @@
 import 'package:breaking_bad_clone/domain/models/location.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class RemoteDataSource {
   Future<void> addLocation(

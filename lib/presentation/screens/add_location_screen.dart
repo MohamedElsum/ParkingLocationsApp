@@ -2,10 +2,11 @@ import 'package:breaking_bad_clone/business_logic/cubit/parking_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddLocation extends StatefulWidget {
-  const AddLocation({Key? key}) : super(key: key);
+  final ParkingCubit parkingCubit;
+
+  const AddLocation({Key? key, required this.parkingCubit}) : super(key: key);
 
   @override
   State<AddLocation> createState() => _AddLocationState();
@@ -17,7 +18,8 @@ class _AddLocationState extends State<AddLocation> {
   TextEditingController nameController = TextEditingController();
   TextEditingController desController = TextEditingController();
   double rate = 0;
-  late ParkingCubit _parkingCubit;
+
+  // late ParkingCubit _parkingCubit;
 
   Set<Marker> mark = {};
 
@@ -46,7 +48,7 @@ class _AddLocationState extends State<AddLocation> {
                 mark.clear();
                 mark.add(
                   Marker(
-                    markerId: MarkerId('new Location'),
+                    markerId: const MarkerId('new Location'),
                     position: newLocation,
                   ),
                 );
@@ -244,7 +246,7 @@ class _AddLocationState extends State<AddLocation> {
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
-                        BlocProvider.of<ParkingCubit>(context).addLocation(
+                        widget.parkingCubit.addLocation(
                           double.parse(latController.text),
                           double.parse(longController.text),
                           nameController.text,

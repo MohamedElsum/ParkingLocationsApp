@@ -1,7 +1,6 @@
 import 'package:breaking_bad_clone/data/data_source/remote_data_source/remote_data_source_impl.dart';
 import 'package:breaking_bad_clone/domain/models/location.dart';
 import 'package:breaking_bad_clone/domain/repository/main_repo.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RepoImpl implements Repository {
   final RemoteDataSourceImpl remoteDataSourceImpl;

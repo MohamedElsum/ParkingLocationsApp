@@ -1,13 +1,11 @@
-import 'dart:html';
-
 import 'package:breaking_bad_clone/core/constants/strings.dart';
-import 'package:breaking_bad_clone/domain/models/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class WebServices {
   late Dio dio;
+
   //final firestore = FirebaseFirestore.instance;
 
   WebServices() {
@@ -22,7 +20,7 @@ class WebServices {
 
   Future<void> addLocation(
       double lat, double long, String name, String des, double rate) async {
-    try{
+    try {
       await FirebaseFirestore.instance.collection('Locations').doc(name).set({
         'latitude': lat,
         'longitude': long,
@@ -30,17 +28,22 @@ class WebServices {
         'Description': des,
         'rate': rate,
       });
-    }catch(e){
-      print(e);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
-  Future<QuerySnapshot?> getLocationsData() async{
-    try{
-      final locationsResponse = await FirebaseFirestore.instance.collection('Locations').get();
+  Future<QuerySnapshot?> getLocationsData() async {
+    try {
+      final locationsResponse =
+          await FirebaseFirestore.instance.collection('Locations').get();
       return locationsResponse;
-    }catch(e){
-      print(e);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
     }
     return null;
   }

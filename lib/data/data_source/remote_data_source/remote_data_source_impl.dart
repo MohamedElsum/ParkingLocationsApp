@@ -17,15 +17,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<List<Locations>> getLocationsData() async {
     final locationsResponse = await webServices.getLocationsData();
     final List<Locations> locationsResponseData = [];
-    locationsResponse?.docs.map((parkingItem) {
+    for (int i = 0; i < locationsResponse!.docs.length; i++) {
       locationsResponseData.add(Locations(
-        longitude: parkingItem['longitude'],
-        latitude: parkingItem['latitude'],
-        rate: parkingItem['rate'],
-        desc: parkingItem['Description'],
-        name: parkingItem['Name'],
+        longitude: locationsResponse.docs[i].get('longitude'),
+        latitude: locationsResponse.docs[i].get('latitude'),
+        rate: locationsResponse.docs[i].get('rate'),
+        desc: locationsResponse.docs[i].get('Description'),
+        name: locationsResponse.docs[i].get('Name'),
       ));
-    });
+    }
     return locationsResponseData;
   }
 }

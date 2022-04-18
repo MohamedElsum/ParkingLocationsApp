@@ -10,7 +10,7 @@ class GetLocationUsecase {
     repoImpl = RepoImpl(RemoteDataSourceImpl(WebServices()));
   }
 
-  Future<List<Locations>> getLocationsData() async{
+  Future<List<Locations>> getLocationsData() async {
     final locationsResponse = await repoImpl.getLocationsData();
     return locationsResponse;
   }

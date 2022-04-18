@@ -15,6 +15,13 @@ class _ParkingMapScreenState extends State<ParkingMapScreen> {
   final Set<Marker> _markers = {};
   late ParkingCubit _parkingCubit;
 
+  @override
+  void initState() {
+    _parkingCubit = BlocProvider.of<ParkingCubit>(context);
+    _parkingCubit.getLocationsData();
+    super.initState();
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
       _markers.add(
@@ -58,9 +65,6 @@ class _ParkingMapScreenState extends State<ParkingMapScreen> {
             borderRadius: BorderRadius.circular(30),
             child: ElevatedButton(
               onPressed: () {
-                _parkingCubit = BlocProvider.of<ParkingCubit>(context);
-                _parkingCubit.getLocationsData();
-
                 Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (context) =>

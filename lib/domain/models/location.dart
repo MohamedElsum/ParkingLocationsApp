@@ -1,9 +1,9 @@
 class Locations {
-  double latitude;
-  double longitude;
+  String latitude;
+  String longitude;
   String name;
   String desc;
-  double rate;
+  String rate;
 
   Locations({
     required this.longitude,

@@ -6,8 +6,6 @@ import 'package:flutter/foundation.dart';
 class WebServices {
   late Dio dio;
 
-  //final firestore = FirebaseFirestore.instance;
-
   WebServices() {
     BaseOptions options = BaseOptions(
       baseUrl: AppConstants.baseUrl,
@@ -19,7 +17,7 @@ class WebServices {
   }
 
   Future<void> addLocation(
-      double lat, double long, String name, String des, double rate) async {
+      String lat, String long, String name, String des, String rate) async {
     try {
       await FirebaseFirestore.instance.collection('Locations').doc(name).set({
         'latitude': lat,

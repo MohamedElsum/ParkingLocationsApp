@@ -247,12 +247,14 @@ class _AddLocationState extends State<AddLocation> {
                     child: ElevatedButton(
                       onPressed: () {
                         widget.parkingCubit.addLocation(
-                          double.parse(latController.text),
-                          double.parse(longController.text),
+                          latController.text,
+                          longController.text,
                           nameController.text,
                           desController.text,
-                          rate,
+                          rate.toString(),
                         );
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/", (r) => false);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.indigo,

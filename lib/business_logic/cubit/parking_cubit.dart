@@ -20,7 +20,7 @@ class ParkingCubit extends Cubit<ParkingState> {
         );
 
   Future<void> addLocation(
-      double lat, double long, String name, String des, double rate) async {
+      String lat, String long, String name, String des, String rate) async {
     await _addLocationUsecase.addLocation(lat, long, name, des, rate);
   }
 

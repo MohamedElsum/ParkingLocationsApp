@@ -9,7 +9,7 @@ class RepoImpl implements Repository {
 
   @override
   Future<void> addLocation(
-      double lat, double long, String name, String des, double rate) async {
+      String lat, String long, String name, String des, String rate) async {
     await remoteDataSourceImpl.addLocation(lat, long, name, des, rate);
   }
 
@@ -18,6 +18,4 @@ class RepoImpl implements Repository {
     final locationsResponse = await remoteDataSourceImpl.getLocationsData();
     return locationsResponse;
   }
-
-
 }

@@ -8,8 +8,9 @@ class AddLocationUsecase {
   AddLocationUsecase() {
     repoImpl = RepoImpl(RemoteDataSourceImpl(WebServices()));
   }
+
   Future<void> addLocation(
-      double lat, double long, String name, String des, double rate) async {
+      String lat, String long, String name, String des, String rate) async {
     await repoImpl.addLocation(lat, long, name, des, rate);
   }
 }
